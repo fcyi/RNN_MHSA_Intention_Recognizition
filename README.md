@@ -1,0 +1,2 @@
+# RNN_MHSA_Intention_Recognizition
+基于注意力机制的RNN进行意图识别
