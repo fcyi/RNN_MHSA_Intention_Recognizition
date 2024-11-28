@@ -5,6 +5,7 @@ import numpy as np
 from train_eval import train, init_network
 from importlib import import_module
 import argparse
+import os
 
 parser = argparse.ArgumentParser(description='Chinese Text Classification')
 parser.add_argument('--model', type=str, default='BILSTMAtt', help='choose a model: BILSTMAtt')
@@ -26,6 +27,13 @@ if __name__ == '__main__':
 
     x = import_module('models.' + model_name)
     config = x.Config(dataset, embedding)
+
+    if not os.path.exists(os.path.dirname(config.save_path)):
+        os.makedirs(os.path.dirname(config.save_path), exist_ok=True)
+
+    if not os.path.exists(config.log_path):
+        os.makedirs(config.log_path, exist_ok=True)
+
     np.random.seed(1)
     torch.manual_seed(1)
     torch.cuda.manual_seed_all(1)  # 为所有的GPU设置生成随机数种子
